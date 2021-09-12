@@ -2,6 +2,8 @@ package com.trepcsi.montyhall;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.trepcsi.montyhall.screens.Menu;
+import com.trepcsi.montyhall.screens.PlayScreen;
 
 public class MontyHall extends Game {
     public static int V_WIDTH = 1200;
@@ -12,7 +14,7 @@ public class MontyHall extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        setScreen(new PlayScreen(this));
+        setScreen(new Menu(this));
     }
 
     @Override

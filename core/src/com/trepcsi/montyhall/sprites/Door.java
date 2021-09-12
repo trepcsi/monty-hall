@@ -3,7 +3,7 @@ package com.trepcsi.montyhall.sprites;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.trepcsi.montyhall.PlayScreen;
+import com.trepcsi.montyhall.screens.PlayScreen;
 import com.trepcsi.montyhall.helper.GameState;
 
 public class Door extends Sprite {

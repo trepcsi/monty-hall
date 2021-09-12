@@ -1,4 +1,4 @@
-package com.trepcsi.montyhall;
+package com.trepcsi.montyhall.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.trepcsi.montyhall.MontyHall;
 import com.trepcsi.montyhall.helper.GameState;
 import com.trepcsi.montyhall.helper.TextManager;
 import com.trepcsi.montyhall.sprites.Door;
@@ -115,7 +116,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.gl.glViewport(0, 0, MontyHall.V_WIDTH, MontyHall.V_HEIGHT);
     }
 
     @Override

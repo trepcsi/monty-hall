@@ -1,6 +1,5 @@
 package com.trepcsi.montyhall.helper;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,20 +23,13 @@ public class TextManager {
 
     public void draw(SpriteBatch batch, GameState state) {
         switch (state) {
-            case START:
-                font.draw(batch, begin, -MontyHall.V_WIDTH / 2.f + 100, MontyHall.V_HEIGHT / 4.f + 100);
-                break;
-            case AFTER_GUESS:
+            case START -> font.draw(batch, begin, -MontyHall.V_WIDTH / 2.f + 100, MontyHall.V_HEIGHT / 4.f + 100);
+            case AFTER_GUESS -> {
                 font.draw(batch, afterGuess1, -MontyHall.V_WIDTH / 2.f + 100, MontyHall.V_HEIGHT / 4.f + 100);
                 font.draw(batch, afterGuess2, -MontyHall.V_WIDTH / 2.f + 100, MontyHall.V_HEIGHT / 4.f + 50);
-                break;
-            case WIN:
-                font.draw(batch, win, -MontyHall.V_WIDTH / 2.f + 100, MontyHall.V_HEIGHT / 4.f + 100);
-                break;
-            case LOSE:
-                font.draw(batch, lose, -MontyHall.V_WIDTH / 2.f + 100, MontyHall.V_HEIGHT / 4.f + 100);
-                break;
+            }
+            case WIN -> font.draw(batch, win, -MontyHall.V_WIDTH / 2.f + 100, MontyHall.V_HEIGHT / 4.f + 100);
+            case LOSE -> font.draw(batch, lose, -MontyHall.V_WIDTH / 2.f + 100, MontyHall.V_HEIGHT / 4.f + 100);
         }
-
     }
 }
