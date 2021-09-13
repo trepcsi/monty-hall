@@ -32,24 +32,27 @@ public class Menu implements Screen {
 
     @Override
     public void show() {
+        //FIXME interactable buttons on other screens
         Gdx.input.setInputProcessor(stage);
 
         Table mainTable = new Table();
         mainTable.setFillParent(true);
-        mainTable.top();
+        mainTable.center();
 
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = new BitmapFont();
         TextButton playButton = new TextButton("Play", style);
+        playButton.getLabel().setFontScale(5, 5);
         TextButton exitButton = new TextButton("Exit", style);
+        exitButton.getLabel().setFontScale(5, 5);
 
-        playButton.addListener(new ClickListener(){
+        playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new PlayScreen(game));
             }
         });
-        exitButton.addListener(new ClickListener(){
+        exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();

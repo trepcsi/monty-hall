@@ -1,6 +1,7 @@
 package com.trepcsi.montyhall.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,6 +24,7 @@ public class PlayScreen implements Screen {
 
     private final Texture background;
     private final Texture replay;
+    private final Texture statistics;
 
     private Array<Door> doors;
 
@@ -40,6 +42,7 @@ public class PlayScreen implements Screen {
 
         background = new Texture("background.jpg");
         replay = new Texture("Restart.png");
+        statistics = new Texture("statistics.png");
 
         generateDoors();
         gameState = GameState.START;
@@ -70,9 +73,9 @@ public class PlayScreen implements Screen {
             textManager.draw(game.batch, gameState);
         }
         game.batch.draw(replay, -(float) MontyHall.V_WIDTH / 2 + 30, -(float) MontyHall.V_HEIGHT / 2 + 30, MontyHall.V_WIDTH / 20f, MontyHall.V_WIDTH / 20f);
+        game.batch.draw(statistics, -(float) MontyHall.V_WIDTH / 2 + 30 + MontyHall.V_WIDTH / 20f + 30, -(float) MontyHall.V_HEIGHT / 2 + 30, MontyHall.V_WIDTH / 20f, MontyHall.V_WIDTH / 20f);
         game.batch.end();
     }
-
 
     //TODO fix first click can be anywhere
     private void handleInput(float dt) {
@@ -94,6 +97,15 @@ public class PlayScreen implements Screen {
                     && worldY > -(float) MontyHall.V_HEIGHT / 2 + 30 && worldY < -(float) MontyHall.V_HEIGHT / 2 + 30 + MontyHall.V_WIDTH / 20f) {
                 game.setScreen(new PlayScreen(game));
             }
+            if (worldX > -(float) MontyHall.V_WIDTH / 2 + 30 + MontyHall.V_WIDTH / 20f + 30
+                    && worldX < -(float) MontyHall.V_WIDTH / 2 + 30 + MontyHall.V_WIDTH / 20f + MontyHall.V_WIDTH / 20f + 30
+                    && worldY > -(float) MontyHall.V_HEIGHT / 2 + 30
+                    && worldY < -(float) MontyHall.V_HEIGHT / 2 + 30 + MontyHall.V_WIDTH / 20f) {
+                game.setScreen(new StatisticsScreen(game, this, textManager));
+            }
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            game.setScreen(new PlayScreen(game));
         }
     }
 
