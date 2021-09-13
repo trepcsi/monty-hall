@@ -22,6 +22,7 @@ public class PlayScreen implements Screen {
     private final Viewport viewport;
 
     private final Texture background;
+    private final Texture replay;
 
     private Array<Door> doors;
 
@@ -37,7 +38,9 @@ public class PlayScreen implements Screen {
         camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         textManager = new TextManager();
 
-        this.background = new Texture("background.jpg");
+        background = new Texture("background.jpg");
+        replay = new Texture("Restart.png");
+
         generateDoors();
         gameState = GameState.START;
         clickTimer = 0;
@@ -66,9 +69,12 @@ public class PlayScreen implements Screen {
             door.draw(game.batch);
             textManager.draw(game.batch, gameState);
         }
+        game.batch.draw(replay, -(float) MontyHall.V_WIDTH / 2 + 30, -(float) MontyHall.V_HEIGHT / 2 + 30, MontyHall.V_WIDTH / 20f, MontyHall.V_WIDTH / 20f);
         game.batch.end();
     }
 
+
+    //TODO fix first click can be anywhere
     private void handleInput(float dt) {
         clickTimer += dt;
         if (Gdx.input.isTouched()) {
@@ -82,6 +88,11 @@ public class PlayScreen implements Screen {
                 for (Door d : doors) {
                     d.clickInGame(worldX, worldY);
                 }
+            }
+
+            if (worldX > -(float) MontyHall.V_WIDTH / 2 + 30 && worldX < -(float) MontyHall.V_WIDTH / 2 + 30 + MontyHall.V_WIDTH / 20f
+                    && worldY > -(float) MontyHall.V_HEIGHT / 2 + 30 && worldY < -(float) MontyHall.V_HEIGHT / 2 + 30 + MontyHall.V_WIDTH / 20f) {
+                game.setScreen(new PlayScreen(game));
             }
         }
     }
