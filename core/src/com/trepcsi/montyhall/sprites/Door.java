@@ -35,17 +35,22 @@ public class Door extends Sprite {
         super.draw(batch);
     }
 
-    public void clickInGame(float x, float y) {
+    public boolean clickInGame(float x, float y, boolean firstClick) {
         if (getBoundingRectangle().contains(x, y)) {
-            if (isCar) {
-                if (screen.gameState() != GameState.WIN && screen.gameState() != GameState.LOSE)
-                    screen.changeState(GameState.WIN);
-            } else {
-                if (screen.gameState() != GameState.WIN && screen.gameState() != GameState.LOSE)
-                    screen.changeState(GameState.LOSE);
+            if (!firstClick) {
+                if (isCar) {
+                    if (screen.gameState() != GameState.WIN && screen.gameState() != GameState.LOSE)
+                        screen.changeState(GameState.WIN);
+                } else {
+                    if (screen.gameState() != GameState.WIN && screen.gameState() != GameState.LOSE)
+                        screen.changeState(GameState.LOSE);
+                }
+                screen.toPublish = true;
+                reveal();
             }
-            reveal();
+            return true;
         }
+        return false;
     }
 
     public boolean isSelected(float x, float y) {

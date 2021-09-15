@@ -33,6 +33,12 @@ public class PlayScreen implements Screen {
 
     private final TextManager textManager;
 
+    int firstDoor = -1;
+    int secondDoor = -1;
+
+    public boolean toPublish = false;
+    public boolean published = false;
+
     public PlayScreen(MontyHall game) {
         this.game = game;
         camera = new OrthographicCamera();
@@ -80,16 +86,29 @@ public class PlayScreen implements Screen {
     //TODO fix first click can be anywhere
     private void handleInput(float dt) {
         clickTimer += dt;
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched() && clickTimer > 0.5f) {
             float worldX = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY())).x;
             float worldY = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY())).y;
+            int i = 0;
             if (gameState == GameState.START) {
-                gameState = GameState.AFTER_GUESS;
-                clickTimer = 0;
-                showGoat(worldX, worldY);
-            } else if (clickTimer > 0.5f) {
                 for (Door d : doors) {
-                    d.clickInGame(worldX, worldY);
+                    if (d.clickInGame(worldX, worldY, true)) {
+                        gameState = GameState.AFTER_GUESS;
+                        showGoat(worldX, worldY);
+                        firstDoor = i;
+                    }
+                    i++;
+                }
+
+            } else {
+                for (Door d : doors) {
+                    if (d.clickInGame(worldX, worldY, false)) {
+                        secondDoor = i;
+                    }
+                    i++;
+                }
+                if(toPublish && !published) {
+                    publishResult();
                 }
             }
 
@@ -103,6 +122,7 @@ public class PlayScreen implements Screen {
                     && worldY < -(float) MontyHall.V_HEIGHT / 2 + 30 + MontyHall.V_WIDTH / 20f) {
                 game.setScreen(new StatisticsScreen(game, this, textManager));
             }
+            clickTimer = 0;
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             game.setScreen(new PlayScreen(game));
@@ -160,6 +180,11 @@ public class PlayScreen implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    private void publishResult() {
+        System.out.println(firstDoor + " - " + secondDoor);
+        published = true;
     }
 
     @Override
