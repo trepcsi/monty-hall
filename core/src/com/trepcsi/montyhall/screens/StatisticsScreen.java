@@ -42,6 +42,9 @@ public class StatisticsScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(playScreen);
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            game.setScreen(new PlayScreen(game));
+        }
     }
 
     @Override

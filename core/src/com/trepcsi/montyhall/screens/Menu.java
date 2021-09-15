@@ -16,7 +16,7 @@ import com.trepcsi.montyhall.MontyHall;
 
 public class Menu implements Screen {
 
-    private MontyHall game;
+    private final MontyHall game;
 
     private final Stage stage;
     private final OrthographicCamera camera;
