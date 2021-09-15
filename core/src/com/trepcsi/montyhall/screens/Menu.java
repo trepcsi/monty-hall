@@ -32,7 +32,6 @@ public class Menu implements Screen {
 
     @Override
     public void show() {
-        //FIXME interactable buttons on other screens
         Gdx.input.setInputProcessor(stage);
 
         Table mainTable = new Table();
@@ -95,7 +94,7 @@ public class Menu implements Screen {
 
     @Override
     public void hide() {
-
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
