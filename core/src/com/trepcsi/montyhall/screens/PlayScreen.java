@@ -14,6 +14,8 @@ import com.trepcsi.montyhall.helper.GameState;
 import com.trepcsi.montyhall.helper.TextManager;
 import com.trepcsi.montyhall.sprites.Door;
 
+import java.io.*;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayScreen implements Screen {
@@ -39,6 +41,8 @@ public class PlayScreen implements Screen {
     public boolean toPublish = false;
     public boolean published = false;
 
+    private File file;
+
     public PlayScreen(MontyHall game) {
         this.game = game;
         camera = new OrthographicCamera();
@@ -53,6 +57,7 @@ public class PlayScreen implements Screen {
         generateDoors();
         gameState = GameState.START;
         clickTimer = 0;
+        createFile();
     }
 
     private void generateDoors() {
@@ -107,7 +112,7 @@ public class PlayScreen implements Screen {
                     }
                     i++;
                 }
-                if(toPublish && !published) {
+                if (toPublish && !published) {
                     publishResult();
                 }
             }
@@ -183,8 +188,59 @@ public class PlayScreen implements Screen {
     }
 
     private void publishResult() {
-        System.out.println(firstDoor + " - " + secondDoor);
+        updateStatistics();
         published = true;
+    }
+
+    private void createFile() {
+        file = new File("statistics.txt");
+        try {
+            if (file.createNewFile()) {
+                FileWriter writer = new FileWriter(file);
+                writer.write("0000");
+                writer.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateStatistics() {
+        try {
+            Scanner reader = new Scanner(file);
+            String statsAtStart = reader.nextLine();
+            reader.close();
+            FileWriter writer = new FileWriter(file);
+            writer.write(newStats(statsAtStart));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String newStats(String statsAtStart) {
+        int gamesWhenChange = Character.getNumericValue(statsAtStart.charAt(0));
+        int gamesWhenNoChange = Character.getNumericValue(statsAtStart.charAt(1));
+        int winsWhenChange = Character.getNumericValue(statsAtStart.charAt(2));
+        int winsWhenNoChange = Character.getNumericValue(statsAtStart.charAt(3));
+        if (firstDoor == secondDoor) {
+            //no change
+            gamesWhenNoChange++;
+            if (gameState == GameState.WIN) {
+                winsWhenNoChange++;
+            }
+        } else {
+            gamesWhenChange++;
+            if (gameState == GameState.WIN) {
+                winsWhenChange++;
+            }
+        }
+        String result = "";
+        result += String.valueOf(gamesWhenChange);
+        result += String.valueOf(gamesWhenNoChange);
+        result += String.valueOf(winsWhenChange);
+        result += String.valueOf(winsWhenNoChange);
+        return result;
     }
 
     @Override
