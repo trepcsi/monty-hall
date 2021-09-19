@@ -221,7 +221,6 @@ public class PlayScreen implements Screen {
     private String newStats() throws FileNotFoundException {
         Scanner reader = new Scanner(file);
         String line1 = reader.nextLine();
-        System.out.println(line1);
         int gamesWhenChange = Integer.parseInt(line1);
         String line2 = reader.nextLine();
         int gamesWhenNoChange = Integer.parseInt(line2);

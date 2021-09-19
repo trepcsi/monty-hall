@@ -54,7 +54,6 @@ public class TextManager {
             e.printStackTrace();
         }
         String line1 = reader.nextLine();
-        System.out.println(line1);
         float gamesWhenChange = Integer.parseInt(line1);
         String line2 = reader.nextLine();
         float gamesWhenNoChange = Integer.parseInt(line2);
