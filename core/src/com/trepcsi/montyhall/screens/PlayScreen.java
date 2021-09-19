@@ -99,12 +99,13 @@ public class PlayScreen implements Screen {
                 for (Door d : doors) {
                     if (d.clickInGame(worldX, worldY, true)) {
                         gameState = GameState.AFTER_GUESS;
+
                         showGoat(worldX, worldY);
+
                         firstDoor = i;
                     }
                     i++;
                 }
-
             } else {
                 for (Door d : doors) {
                     if (d.clickInGame(worldX, worldY, false)) {
@@ -197,7 +198,7 @@ public class PlayScreen implements Screen {
         try {
             if (file.createNewFile()) {
                 FileWriter writer = new FileWriter(file);
-                writer.write("0000");
+                writer.write("0\n0\n0\n0");
                 writer.close();
             }
         } catch (IOException e) {
@@ -207,22 +208,29 @@ public class PlayScreen implements Screen {
 
     private void updateStatistics() {
         try {
-            Scanner reader = new Scanner(file);
-            String statsAtStart = reader.nextLine();
-            reader.close();
+            String updatedStats = newStats();
+            System.out.println(updatedStats);
             FileWriter writer = new FileWriter(file);
-            writer.write(newStats(statsAtStart));
+            writer.write(updatedStats);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private String newStats(String statsAtStart) {
-        int gamesWhenChange = Character.getNumericValue(statsAtStart.charAt(0));
-        int gamesWhenNoChange = Character.getNumericValue(statsAtStart.charAt(1));
-        int winsWhenChange = Character.getNumericValue(statsAtStart.charAt(2));
-        int winsWhenNoChange = Character.getNumericValue(statsAtStart.charAt(3));
+    private String newStats() throws FileNotFoundException {
+        Scanner reader = new Scanner(file);
+        String line1 = reader.nextLine();
+        System.out.println(line1);
+        int gamesWhenChange = Integer.parseInt(line1);
+        String line2 = reader.nextLine();
+        int gamesWhenNoChange = Integer.parseInt(line2);
+        String line3 = reader.nextLine();
+        int winsWhenChange = Integer.parseInt(line3);
+        String line4 = reader.nextLine();
+        int winsWhenNoChange = Integer.parseInt(line4);
+        reader.close();
+
         if (firstDoor == secondDoor) {
             //no change
             gamesWhenNoChange++;
@@ -236,10 +244,10 @@ public class PlayScreen implements Screen {
             }
         }
         String result = "";
-        result += String.valueOf(gamesWhenChange);
-        result += String.valueOf(gamesWhenNoChange);
-        result += String.valueOf(winsWhenChange);
-        result += String.valueOf(winsWhenNoChange);
+        result += (gamesWhenChange) + "\n";
+        result += (gamesWhenNoChange) + "\n";
+        result += (winsWhenChange) + "\n";
+        result += (winsWhenNoChange);
         return result;
     }
 
