@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class TextManager {
 
     private final String begin = "2 Goats 1 Car, can you find it? Pick a door !";
-    private final String afterGuess1 = "Look a Goat, would you like the stay or change?";
+    private final String afterGuess1 = "Look a Goat, would you like the stay or change ?";
     private final String afterGuess2 = "Pick again !";
     private final String win = "Congratulation, You won!";
     private final String lose = "You lost, better luck next time!";
@@ -62,6 +62,7 @@ public class TextManager {
         String line4 = reader.nextLine();
         float winsWhenNoChange = Integer.parseInt(line4);
         reader.close();
+
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(1);
         df.setMinimumFractionDigits(1);

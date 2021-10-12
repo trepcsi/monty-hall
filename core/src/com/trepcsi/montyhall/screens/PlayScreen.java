@@ -77,6 +77,7 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         handleInput(delta);
         game.batch.setProjectionMatrix(camera.combined);
+
         game.batch.begin();
         game.batch.draw(background, -(float) MontyHall.V_WIDTH / 2, -(float) MontyHall.V_HEIGHT / 2);
         for (Door door : doors) {
@@ -86,14 +87,16 @@ public class PlayScreen implements Screen {
         game.batch.draw(replay, -(float) MontyHall.V_WIDTH / 2 + 30, -(float) MontyHall.V_HEIGHT / 2 + 30, MontyHall.V_WIDTH / 20f, MontyHall.V_WIDTH / 20f);
         game.batch.draw(statistics, -(float) MontyHall.V_WIDTH / 2 + 30 + MontyHall.V_WIDTH / 20f + 30, -(float) MontyHall.V_HEIGHT / 2 + 30, MontyHall.V_WIDTH / 20f, MontyHall.V_WIDTH / 20f);
         game.batch.end();
+
     }
 
-    //TODO fix first click can be anywhere
     private void handleInput(float dt) {
         clickTimer += dt;
+
         if (Gdx.input.isTouched() && clickTimer > 0.5f) {
             float worldX = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY())).x;
             float worldY = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY())).y;
+
             int i = 0;
             if (gameState == GameState.START) {
                 for (Door d : doors) {
@@ -118,10 +121,13 @@ public class PlayScreen implements Screen {
                 }
             }
 
+            //replay
             if (worldX > -(float) MontyHall.V_WIDTH / 2 + 30 && worldX < -(float) MontyHall.V_WIDTH / 2 + 30 + MontyHall.V_WIDTH / 20f
                     && worldY > -(float) MontyHall.V_HEIGHT / 2 + 30 && worldY < -(float) MontyHall.V_HEIGHT / 2 + 30 + MontyHall.V_WIDTH / 20f) {
                 game.setScreen(new PlayScreen(game));
             }
+
+            //statistics screen
             if (worldX > -(float) MontyHall.V_WIDTH / 2 + 30 + MontyHall.V_WIDTH / 20f + 30
                     && worldX < -(float) MontyHall.V_WIDTH / 2 + 30 + MontyHall.V_WIDTH / 20f + MontyHall.V_WIDTH / 20f + 30
                     && worldY > -(float) MontyHall.V_HEIGHT / 2 + 30
@@ -130,6 +136,8 @@ public class PlayScreen implements Screen {
             }
             clickTimer = 0;
         }
+
+        //replay
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             game.setScreen(new PlayScreen(game));
         }
@@ -142,6 +150,8 @@ public class PlayScreen implements Screen {
                 selectedIndex = i;
             }
         }
+
+        //FIXME 1 click, 1 car, 1show - way simpler
         boolean goatRevealed = false;
         int randomIndex = -1;
         while (!goatRevealed) {
@@ -153,6 +163,7 @@ public class PlayScreen implements Screen {
                 }
             }
         }
+
     }
 
     public void changeState(GameState state) {
