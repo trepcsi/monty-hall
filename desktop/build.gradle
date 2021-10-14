@@ -1,17 +1,17 @@
+plugins {
+    id 'application'
+}
+
+application {
+    mainClass = 'com.trepcsi.montyhall.desktop.DesktopLauncher'
+}
+
 sourceCompatibility = 11
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../core/assets"]
 
 project.ext.mainClassName = "com.trepcsi.montyhall.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../core/assets")
-
-task run(dependsOn: classes, type: JavaExec) {
-    main = project.mainClassName
-    classpath = sourceSets.main.runtimeClasspath
-    standardInput = System.in
-    workingDir = project.assetsDir
-    ignoreExitValue = true
-}
 
 task debug(dependsOn: classes, type: JavaExec) {
     main = project.mainClassName
